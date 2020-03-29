@@ -1,5 +1,6 @@
 import 'regenerator-runtime/runtime'
 
+// redux style store
 const makeGenState = (initialState) => {
   let state = initialState;
   const listeners = [];
@@ -23,9 +24,7 @@ const makeGenState = (initialState) => {
       }
     }
   }
-
   const updater = updaterGen();
-
   return {
     getState,
     subscribe,
@@ -34,7 +33,7 @@ const makeGenState = (initialState) => {
 }
 
 
-// example
+// examples
 const initialState = { count: 0 };
 const { subscribe, updater, getState } = makeGenState(initialState);
 
