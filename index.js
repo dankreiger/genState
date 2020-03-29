@@ -10,7 +10,7 @@ const makeGenState = (initialState) => {
     return () => listeners.filter(l => l !== fn);
   }
 
-  function* updater() {
+  function* updaterGen() {
     while (true) {
       const update = yield;
       if (typeof update !== 'object') {
@@ -24,6 +24,8 @@ const makeGenState = (initialState) => {
     }
   }
 
+  const updater = updaterGen();
+
   return {
     getState,
     subscribe,
@@ -31,26 +33,24 @@ const makeGenState = (initialState) => {
   }
 }
 
-const initialState = { count: 0 };
-const store = makeGenState(initialState);
 
-// use the same instance or make new ones - they will do the same thing
-const updaterInstance = store.updater();
-const updaterInstance1 = store.updater();
+// example
+const initialState = { count: 0 };
+const { subscribe, updater, getState } = makeGenState(initialState);
 
 function render() {
-  document.getElementById('app').innerHTML = JSON.stringify(store.getState());
+  document.getElementById('app').innerHTML = JSON.stringify(getState());
 }
 
 render();
-store.subscribe(render);
+subscribe(render);
 
 let i = 0;
 document.querySelector('button').addEventListener('click', () => {
-  updaterInstance1.next({ count: i });
+  updater.next({ count: i });
   i++
 });
 
 document.querySelector('input').addEventListener('input', e => {
-  updaterInstance.next({ text: e.target.value });
+  updater.next({ text: e.target.value });
 })
