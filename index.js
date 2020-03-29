@@ -33,6 +33,8 @@ const makeGenState = (initialState) => {
 
 const initialState = { count: 0 };
 const store = makeGenState(initialState);
+
+// use the same instance or make new ones - they will do the same thing
 const updaterInstance = store.updater();
 const updaterInstance1 = store.updater();
 
