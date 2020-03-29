@@ -34,7 +34,7 @@ const makeGenState = (initialState) => {
 
 
 // examples
-const initialState = { count: 0 };
+const initialState = { count: 0, text: '' };
 const { subscribe, updater, getState } = makeGenState(initialState);
 
 function render() {
